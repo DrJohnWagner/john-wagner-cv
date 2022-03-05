@@ -6,7 +6,7 @@ version: "3.8"
 services:
   app:
     container_name: johnwagnercv
-    image: johnwagnercv
+    image: drjohnwagner/john-wagner-cv
     build:
       context: .
       target: development
