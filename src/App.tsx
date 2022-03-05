@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import { ThemeProvider } from "@mui/material/styles"
+import { CssBaseline } from "@mui/material/"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Main from "./Containers/Main"
+
+import "./App.css"
+import theme from "./Theme"
+
+// import Dialog from "@mui/material/Dialog"
+// <SimpleDialog />
+// const SimpleDialog = () => {
+//     const [open, setOpen] = React.useState(true)
+//     setTimeout(() => {
+//         setOpen(false)
+//     }, 1000)
+//     return (
+//         <Dialog fullScreen open={open}>
+//             <Home />
+//         </Dialog>
+//     )
+// }
+
+const App = (): JSX.Element => {
+    return (
+        <div className="App">
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Main />
+            </ThemeProvider>
+        </div>
+    )
 }
 
-export default App;
+export default App

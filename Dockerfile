@@ -1,0 +1,19 @@
+FROM node:16 AS development
+# Tell node to run in development mode...
+ENV NODE_ENV=development
+# Create the working directory...
+# The WORKDIR instruction sets the working directory
+# for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions
+# that follow it in the Dockerfile. If the WORKDIR doesn’t
+# exist, it will be created even if it’s not used in any
+# subsequent Dockerfile instruction.
+WORKDIR /app
+# Copy the application files...
+COPY . .
+# Expose the port...
+EXPOSE 3000
+# Install and build the app...
+#RUN npm install && npm build
+RUN npm install
+# Start the app...
+CMD [ "npm", "start" ]
