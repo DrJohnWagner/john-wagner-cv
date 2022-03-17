@@ -3,30 +3,20 @@ import { ThemeProvider } from "@mui/material/styles"
 import { CssBaseline } from "@mui/material/"
 
 import Main from "./Containers/Main"
+import useState from "./Functions/useState"
 
 import "./App.css"
-import theme from "./Theme"
+import createIndexedTheme from "./Theme/Theme"
 
-// import Dialog from "@mui/material/Dialog"
-// <SimpleDialog />
-// const SimpleDialog = () => {
-//     const [open, setOpen] = React.useState(true)
-//     setTimeout(() => {
-//         setOpen(false)
-//     }, 1000)
-//     return (
-//         <Dialog fullScreen open={open}>
-//             <Home />
-//         </Dialog>
-//     )
-// }
+const THEMES = 9
 
 const App = (): JSX.Element => {
+    const [getTheme, setTheme] = useState(0)
     return (
         <div className="App">
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={createIndexedTheme(getTheme())}>
                 <CssBaseline />
-                <Main />
+                <Main onClick={() => setTheme((getTheme() + 1) % THEMES)} />
             </ThemeProvider>
         </div>
     )

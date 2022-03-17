@@ -1,0 +1,49 @@
+import React from "react"
+import { Collapse } from "@mui/material"
+import Timetable from "./Timetable"
+
+import IAmJohn from "../IAmJohn"
+import data from "../Data"
+import teaching from "../CV/Teaching"
+
+interface Props {
+    sayMore: boolean
+}
+
+export const Teach = (props: Props): JSX.Element => {
+    const { sayMore } = props
+    return (
+        <>
+            <Collapse in={sayMore}>
+                <IAmJohn words={data.teach} keyword="teach" />
+            </Collapse>
+            <Collapse in={!sayMore}>
+                <Timetable
+                    timeline={teaching.map(({ from, to, title, organisation }) => {
+                        return {
+                            from,
+                            to,
+                            title,
+                            subtitle: organisation,
+                            description: "",
+                            bullets: [],
+                        }
+                    })}
+                    xs={2}
+                    md={3}
+                />
+                {/* <Grid container spacing={2}>
+                    {teaching.map((item) => (
+                        <Grid item key={item.dates + item.course + item.organisation} xs={12}>
+                            <Typography variant="body1" component="span">
+                                {item.dates} {item.course} {item.organisation}
+                            </Typography>
+                        </Grid>
+                    ))}
+                </Grid> */}
+            </Collapse>
+        </>
+    )
+}
+
+export default Teach

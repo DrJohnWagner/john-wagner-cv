@@ -7,7 +7,7 @@ import GridOfChips from "./GridOfChips"
 // import Am from "./Am"
 import IAmJohn from "../IAmJohn"
 import data from "../Data"
-import * as cv from "../CV.json"
+import cv from "../CV"
 
 interface Props {
     sayMore: boolean
@@ -43,7 +43,7 @@ const Know = (props: Props): JSX.Element => {
                     xl={1}
                 />
                 <GridOfChips
-                    strings={skills}
+                    strings={skills.sort((a, b) => a.localeCompare(b))}
                     label="<label>additional skills</label>"
                     columns={24}
                     spacing={2}

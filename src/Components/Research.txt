@@ -1,0 +1,118 @@
+import React from "react"
+import { Grid, Collapse } from "@mui/material"
+import Dialog from "@mui/material/Dialog"
+import DialogContent from "@mui/material/DialogContent"
+import DialogTitle from "@mui/material/DialogTitle"
+import IconButton from "@mui/material/IconButton"
+import CloseIcon from "@mui/icons-material/Close"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { useTheme } from "@mui/material/styles"
+
+// import AccordionWithLink from "./AccordionWithLink"
+import GridOfToggleButtons from "./GridOfToggleButtons"
+import PublicationCard from "./PublicationCard"
+import Publication from "../Types/Publication"
+import useState from "../Functions/useState"
+
+import IAmJohn from "../IAmJohn"
+import publications from "../CV/Publications"
+import data from "../Data"
+
+const IMAGES = process.env.PUBLIC_URL + "/assets/images/publications"
+
+interface Props {
+    sayMore: boolean
+}
+
+const Invent = (props: Props): JSX.Element => {
+    const { sayMore } = props
+    const theme = useTheme()
+    const fullScreen = useMediaQuery(theme.breakpoints.down("md"))
+    const topics = Array.from(
+        new Set(publications.map((publication) => publication.topics.map((topic) => topic)).flat())
+    )
+    const [getTopic, setTopic] = useState<string | null>(null) //topics[0])
+    const [getPublication, setPublication] = useState<Publication | null>(null)
+    const onTopic = (event: any, topic: string) => {
+        setTopic(topic)
+    }
+    const onClose = () => {
+        setPublication(null)
+    }
+    const getSummary = (field: "title" | "authors" | "published") => {
+        const publication = getPublication()
+        if (publication != null && field === "title") {
+            return publication.title
+        } else if (publication != null && field === "authors") {
+            return publication.authors
+        } else if (publication != null) {
+            const { journal, volume } = publication
+            return `${journal} ${volume}`
+        }
+        return ""
+    }
+    const getKey = () => {
+        const publication = getPublication()
+        return publication?.key
+    }
+    return (
+        <>
+            <Collapse in={sayMore}>
+                <IAmJohn words={data.invent} keyword="invent" />
+            </Collapse>
+            <Collapse in={!sayMore}>
+                <GridOfToggleButtons values={topics} value={getTopic()} spacing={2} onChange={onTopic} />
+                <Grid container spacing={2}>
+                    <Grid item key="spacing" xs={12} />
+                    {publications
+                        .filter((publication) => getTopic() == null || publication.topics.includes(getTopic() || ""))
+                        .sort((a, b) => (a.year < b.year ? 1 : -1))
+                        .map((publication) => (
+                            <Grid key={publication.key} item xs={12} sm={6} md={4} lg={3}>
+                                <PublicationCard
+                                    publication={publication}
+                                    onClick={() => setPublication(publication)}
+                                />
+                            </Grid>
+                        ))}
+                </Grid>
+            </Collapse>
+            <Dialog
+                open={getPublication() != null}
+                onClose={onClose}
+                scroll={"paper"}
+                fullScreen={fullScreen}
+                maxWidth={"lg"}
+                aria-labelledby="scroll-dialog-title"
+                aria-describedby="scroll-dialog-description"
+            >
+                <DialogTitle sx={{ alignText: "center" }} id="scroll-dialog-title">
+                    <div style={{ marginRight: "24px" }}>
+                        {getSummary("title")}.
+                        <br />
+                        {getSummary("authors")}.
+                        <br />
+                        {getSummary("published")}.
+                    </div>
+                    <IconButton
+                        aria-label="close"
+                        onClick={onClose}
+                        sx={{
+                            position: "absolute",
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.primary.light,
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent sx={{ marginLeft: "2%", marginBottom: "2%", width: "96%", backgroundColor: "#FFFFFF" }}>
+                    <img src={`${IMAGES}/${getKey()}.png`} />
+                </DialogContent>
+            </Dialog>
+        </>
+    )
+}
+
+export default Invent
