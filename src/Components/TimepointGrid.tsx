@@ -15,9 +15,12 @@ export const TimepointGrid = (props: Props): JSX.Element => {
     const { xs, sm, md, lg, xl } = getBreakpoints(props)
     return (
         <Grid item textAlign="justify" xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
-            <Typography variant="h6" component="span" display="block">
+            <Typography variant="h6" component="span">
                 {timepoint.title}
             </Typography>
+            {/* <Typography variant="subtitle1" component="span" display="block">
+                {timepoint.from} - {timepoint.to}
+            </Typography> */}
             <Typography variant="subtitle1" component="span" display="block">
                 {timepoint.subtitle}
             </Typography>
@@ -39,12 +42,11 @@ export const TimepointGrid = (props: Props): JSX.Element => {
                         // key={bullet}
                         style={{ margin: "2px 0px 0px 16px" }}
                         variant="body1"
-                        component="span"
+                        component="div"
                         display="block"
                     >
                         {bullet}
                     </Typography>
-                    ,
                 </div>
             ))}
         </Grid>

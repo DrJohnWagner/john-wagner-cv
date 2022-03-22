@@ -2,6 +2,7 @@ import React from "react"
 import { Grid, Collapse, Tooltip } from "@mui/material"
 
 import GridOfToggleButtons from "./GridOfToggleButtons"
+import CaptionedImage from "./CaptionedImage"
 import Timeline from "./Timeline"
 
 import useState from "../Functions/useState"
@@ -12,7 +13,7 @@ import images from "../Images"
 import professionalExperience from "../CV/ProfessionalExperience"
 import data from "../Data"
 
-const IMAGES = process.env.PUBLIC_URL + "/assets/images"
+// const IMAGES = process.env.PUBLIC_URL + "/assets/images"
 
 interface Props {
     sayMore: boolean
@@ -47,7 +48,8 @@ export const Do = (props: Props): JSX.Element => {
                                 bullets,
                             }
                         })}
-                    xs={4}
+                    xs={3}
+                    md={2}
                 />
                 <Grid container spacing={2}>
                     {image && <Grid item xs={12} />}
@@ -55,7 +57,7 @@ export const Do = (props: Props): JSX.Element => {
                     {image && (
                         <Grid container item spacing={2} xs={12} justifyContent="center" alignItems="center">
                             <Tooltip title={image.credit}>
-                                <img src={`${IMAGES}/${image.filename}`} />
+                                <CaptionedImage image={getLabel() || ""} width={"50%"} margin="8px 24px" />
                             </Tooltip>
                         </Grid>
                     )}

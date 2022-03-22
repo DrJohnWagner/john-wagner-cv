@@ -48,7 +48,10 @@ const PublicationOrPatentDialog = (props: Props) => {
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent sx={{ marginLeft: "2%", marginBottom: "2%", width: "96%", backgroundColor: "#FFFFFF" }}>
+            <DialogContent
+                style={{ border: "1px solid" }}
+                sx={{ marginLeft: "2%", marginBottom: "2%", width: "96%", backgroundColor: "#FFFFFF" }}
+            >
                 <img src={src} />
             </DialogContent>
         </Dialog>

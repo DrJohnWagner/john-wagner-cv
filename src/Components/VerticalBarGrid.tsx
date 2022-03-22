@@ -1,5 +1,6 @@
 import React from "react"
 import { Box, Grid } from "@mui/material"
+// import { Theme } from "@mui/material/styles"
 
 const VerticalBarGrid = ({
     key,
@@ -18,7 +19,7 @@ const VerticalBarGrid = ({
         <Grid item sx={style} key={align + "-vertical-bar-" + key} xs={xs}>
             <Box
                 sx={{
-                    backgroundColor: (theme) => theme.palette.secondary.light,
+                    backgroundColor: (theme) => theme.palette.divider,
                     height: "100%",
                     width: { width },
                     border: "0px",

@@ -8,15 +8,15 @@ import useState from "./Functions/useState"
 import "./App.css"
 import createIndexedTheme from "./Theme/Theme"
 
-const THEMES = 9
+const THEMES = 7
 
 const App = (): JSX.Element => {
-    const [getTheme, setTheme] = useState(0)
+    const [getThemeIndex, setThemeIndex] = useState(0)
     return (
         <div className="App">
-            <ThemeProvider theme={createIndexedTheme(getTheme())}>
+            <ThemeProvider theme={createIndexedTheme(getThemeIndex())}>
                 <CssBaseline />
-                <Main onClick={() => setTheme((getTheme() + 1) % THEMES)} />
+                <Main themeIndex={getThemeIndex()} onClick={() => setThemeIndex((getThemeIndex() + 1) % THEMES)} />
             </ThemeProvider>
         </div>
     )

@@ -53,9 +53,9 @@ const cv = {
         "SQL",
         "Docker",
         "Github",
-        "Github Enterprise",
+        "Scrum",
         "Travis CI",
-        "UX/UI",
+        "Sketch",
     ],
     industries: [
         "Healthcare",

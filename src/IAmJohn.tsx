@@ -1,7 +1,6 @@
-import React, { useRef, MouseEvent } from "react"
+import React from "react"
 import { Grid } from "@mui/material"
 import Typography from "@mui/material/Typography"
-import { useTheme } from "@mui/material/styles"
 import TypingEffect from "new-react-typing-effect"
 import Background from "./Components/Background"
 
@@ -80,10 +79,6 @@ const createCell = (text: string, key: string) => {
 
 export const IAmJohn = (props: Props): JSX.Element => {
     const { words, keyword } = props
-    const theme = useTheme()
-    // const [getDelta, setDelta] = useState({ dx: 0, dy: 0 })
-    const bgRef = useRef<Background>(null)
-    const fgRef = useRef<HTMLDivElement>(null)
     const cells = Array.from(Array(63).keys()).map(() => "")
     TEMPLATE.forEach(({ index, text }) => {
         cells[index] = text
@@ -93,24 +88,20 @@ export const IAmJohn = (props: Props): JSX.Element => {
         const indices = cells.map((e, i) => (e === "" ? i : -1)).filter((e) => e >= 0)
         cells[indices[getRandomInteger(indices.length)]] = word
     })
-    const onMouseMove = (e: MouseEvent) => {
-        e.preventDefault()
-        if (fgRef.current !== null && bgRef.current !== null) {
-            const cx = e.clientX
-            const cy = e.clientY
-            const cw = fgRef.current.clientWidth / 2
-            const ch = fgRef.current.clientHeight / 2
-            // bgRef.current.setCwChDxDy({ cw: 2 * cw, ch: 2 * ch, dx: (cx - cw) / cw, dy: (cy - ch) / ch })
-            bgRef.current.setCwChDxDy({ cw: 2 * cw, ch: 2 * ch, dx: (cx - cw) / cw, dy: cy / ch })
-            // bgRef.current.setCwChDxDy({ cw: 2 * cw, ch: 2 * ch, dx: cx / cw, dy: cy / ch })
-            const element = fgRef.current
-            element.addEventListener("resize", (event) => console.log(event.detail))
-        }
-    }
     return (
         <>
-            <Background color={theme.palette.secondary.main} ref={bgRef} />
-            <div onMouseMove={onMouseMove} style={{ position: "relative" }} ref={fgRef}>
+            <Background />
+            <div
+                style={{
+                    // backgroundColor: "yellow",
+                    pointerEvents: "none",
+                    position: "absolute",
+                    top: 50,
+                    bottom: 46,
+                    left: 0,
+                    right: 0,
+                }}
+            >
                 <Grid container columns={14} spacing={2} justifyContent="center">
                     {cells.map((cell, index) => createCell(cell, index + cell))}
                 </Grid>

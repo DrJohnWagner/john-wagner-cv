@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Grid, Collapse } from "@mui/material"
+import { Avatar, Badge, Box, Grid, Collapse, Tooltip } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
@@ -7,6 +7,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline"
 import LinkedInIcon from "@mui/icons-material/LinkedIn"
 
 import GridOfChips from "./GridOfChips"
+import useRainbow from "../Functions/useRainbow"
 
 // import Am from "./Am"
 import IAmJohn from "../IAmJohn"
@@ -23,6 +24,11 @@ export const Am = (props: Props): JSX.Element => {
     const { sayMore } = props
     const { summary, coreValues } = cv
     const label = "<label>core values</label>"
+    //
+    const intervalDelay = 1300
+    const transitionDelay = intervalDelay * 1.25
+    const colors = useRainbow({ intervalDelay })
+    const colorKeys = Object.keys(colors)
     return (
         <>
             <Collapse in={sayMore}>
@@ -36,16 +42,53 @@ export const Am = (props: Props): JSX.Element => {
                         style={{ alignItems: "center", display: "flex", flexDirection: "column", textAlign: "center" }}
                         xs={12}
                     >
-                        <Avatar
-                            alt="John Wagner, PhD"
-                            src={`${IMAGES}/John.png`}
-                            sx={{
-                                border: "4px solid",
-                                borderColor: (theme) => theme.palette.primary.main,
-                                width: 96,
-                                height: 96,
-                            }}
-                        />
+                        <Tooltip
+                            placement="right"
+                            title={
+                                <Box sx={{ textAlign: "center" }}>
+                                    <Typography variant="body2" color="inherit">
+                                        Rainbow animation comes from the brilliant Joshua Comeau
+                                        (https://github.com/joshwcomeau).
+                                    </Typography>
+                                </Box>
+                            }
+                        >
+                            <Badge
+                                sx={{
+                                    "& .MuiBadge-badge": {
+                                        // color: "lightgreen",
+                                        // backgroundColor: "green",
+                                        ...colors,
+                                        transition: `
+                                    ${colorKeys[0]} ${transitionDelay}ms linear,
+                                    ${colorKeys[1]} ${transitionDelay}ms linear,
+                                    ${colorKeys[2]} ${transitionDelay}ms linear
+                                    `,
+                                        background: `
+                                    radial-gradient(
+                                        circle at top left,
+                                        var(${colorKeys[2]}),
+                                        var(${colorKeys[1]}),
+                                        var(${colorKeys[0]})
+                                    )
+                                    `,
+                                    },
+                                }}
+                                // color="secondary"
+                                badgeContent={"They/Them"}
+                            >
+                                <Avatar
+                                    alt="John Wagner, PhD"
+                                    src={`${IMAGES}/John.png`}
+                                    sx={{
+                                        border: "4px solid",
+                                        borderColor: (theme) => theme.palette.primary.main,
+                                        width: 96,
+                                        height: 96,
+                                    }}
+                                />
+                            </Badge>
+                        </Tooltip>
                         <Typography variant="h4" component="span" display="block">
                             John Wagner, PhD
                         </Typography>
@@ -118,7 +161,6 @@ export const Am = (props: Props): JSX.Element => {
                             >
                                 {bullet}
                             </Typography>
-                            ,
                         </div>
                     ))}
                 </Grid>

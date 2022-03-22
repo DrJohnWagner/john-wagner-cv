@@ -6,11 +6,10 @@ import { useTheme } from "@mui/material/styles"
 
 import IAmJohn from "../IAmJohn"
 import Education from "./Education"
+import CaptionedImage from "./CaptionedImage"
 import useState from "../Functions/useState"
 import data from "../Data"
 import courses from "../CV/Courses"
-
-const IMAGES = process.env.PUBLIC_URL + "/assets/images"
 
 interface Props {
     sayMore: boolean
@@ -19,8 +18,6 @@ interface Props {
 export const Learn = (props: Props): JSX.Element => {
     const { sayMore } = props
     const theme = useTheme()
-    // const xs = useMediaQuery(theme.breakpoints.only("xs"))
-    // const sm = useMediaQuery(theme.breakpoints.only("sm"))
     const md = useMediaQuery(theme.breakpoints.only("md"))
     const lg = useMediaQuery(theme.breakpoints.only("lg"))
     const xl = useMediaQuery(theme.breakpoints.only("xl"))
@@ -33,12 +30,19 @@ export const Learn = (props: Props): JSX.Element => {
             <Collapse in={!sayMore}>
                 <Grid container spacing={0}>
                     {(md || lg || xl) && (
-                        <Grid item key="left-column" xs={0} md={4} lg={5} sx={{ textAlign: "center" }}>
-                            <img
-                                style={{ border: "4px solid" }}
-                                src={`${IMAGES}/JoelKeizer-Square.png`}
-                                width={"320px"}
-                            />
+                        <Grid
+                            item
+                            key="left-column"
+                            xs={0}
+                            md={4}
+                            lg={5}
+                            style={{
+                                alignItems: "center",
+                                display: "flex",
+                                flexDirection: "column",
+                            }}
+                        >
+                            <CaptionedImage image="Joel Keizer" width={"320px"} margin="8px 24px" />
                         </Grid>
                     )}
                     <Grid item key="right-column" xs={12} md={8} lg={7}>
@@ -68,7 +72,7 @@ export const Learn = (props: Props): JSX.Element => {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        <Typography variant="body1" component="span">
+                        <Typography variant="h6" component="span">
                             {courses[getPage() - 1].name}
                         </Typography>
                     </Grid>

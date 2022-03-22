@@ -17,9 +17,17 @@ const GridOfToggleButtons = (props: Props): JSX.Element => {
         <Box style={{ textAlign: "center" }}>
             <Grid container spacing={spacing}>
                 <Grid item key="toggle-button-group" xs={12}>
-                    <ToggleButtonGroup exclusive value={value} onChange={onChange}>
+                    <ToggleButtonGroup color="primary" exclusive value={value} onChange={onChange}>
                         {values.map((s) => (
-                            <ToggleButton key={s} value={s}>
+                            <ToggleButton
+                                sx={{
+                                    color: (theme) => theme.palette.text.primary + "CC",
+                                    border: "1px solid",
+                                    borderColor: (theme) => theme.palette.primary.main + "88",
+                                }}
+                                key={s}
+                                value={s}
+                            >
                                 {s.slice(0, 1) !== "#" ? getHashtag(s) : s}
                             </ToggleButton>
                         ))}

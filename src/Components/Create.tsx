@@ -38,13 +38,19 @@ const Invent = (props: Props): JSX.Element => {
     const { sayMore } = props
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down("md"))
+    //
+    const cutoff = useMediaQuery(theme.breakpoints.up("lg")) ? 2015 : 2025
     const years = Array.from(
         new Set(publicationsAndPatents.map((publicationOrPatent) => publicationOrPatent.year))
     ).sort((a, b) => (a > b ? -1 : +1))
     const ranges = years
-        .filter((n) => n >= 2015)
+        .filter((n) => n >= cutoff)
         .map((n) => new Range(n, n + 1))
+        .concat(cutoff > 2025 ? [new Range(2025, 2030)] : [])
+        .concat(cutoff > 2020 ? [new Range(2020, 2025)] : [])
+        .concat(cutoff > 2015 ? [new Range(2015, 2020)] : [])
         .concat([new Range(2010, 2015), new Range(2005, 2010), new Range(2000, 2005), new Range(1990, 2000)])
+    //
     const [getRange, setRange] = useState<Range | null>(null) //Years[0])
     const [getPublication, setPublication] = useState<Publication | null>(null)
     const [getPatent, setPatent] = useState<Patent | null>(null)
@@ -98,7 +104,7 @@ const Invent = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.create.filter(() => Math.random() < 0.5)} keyword="create" />
+                <IAmJohn words={data.create.filter(() => Math.random() < 0.4)} keyword="create" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <GridOfToggleButtons

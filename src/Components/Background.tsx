@@ -1,14 +1,13 @@
-import React from "react"
+import React, { useRef, useEffect, MouseEvent } from "react"
 // import { Box } from "@mui/material"
-// import { Theme } from "@mui/material/styles"
 //
 import useMediaQuery from "@mui/material/useMediaQuery"
 import { useTheme } from "@mui/material/styles"
+import useState from "../Functions/useState"
 
 // https://stackoverflow.com/questions/69506133/difference-between-mui-material-styles-and-mui-styles
 
-function LightenDarkenColor(color: string, amount: number) {
-    const usePound = color[0] === "#"
+function getColor(color: string, amount = 0) {
     const num = parseInt(color[0] === "#" ? color.slice(1) : color, 16)
 
     let r = (num >> 16) + amount
@@ -22,179 +21,185 @@ function LightenDarkenColor(color: string, amount: number) {
     let g = (num & 0x0000ff) + amount
     if (g > 255) g = 255
     else if (g < 0) g = 0
+    return { r, g, b }
+}
+
+function LightenDarkenColor(color: string, amount: number) {
+    const usePound = color[0] === "#"
+    const { r, g, b } = getColor(color, amount)
+    // const num = parseInt(color[0] === "#" ? color.slice(1) : color, 16)
+
+    // let r = (num >> 16) + amount
+    // if (r > 255) r = 255
+    // else if (r < 0) r = 0
+
+    // let b = ((num >> 8) & 0x00ff) + amount
+    // if (b > 255) b = 255
+    // else if (b < 0) b = 0
+
+    // let g = (num & 0x0000ff) + amount
+    // if (g > 255) g = 255
+    // else if (g < 0) g = 0
 
     return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16)
 }
 
-const RisingSun = ({ distance, fill }: { distance: number; fill: string }) => {
+const RisingMoon = ({ distance, radius, fill }: { distance: number; radius: number; fill: string }) => {
     const theme = useTheme()
     const xs = useMediaQuery(theme.breakpoints.only("xs"))
     const sm = useMediaQuery(theme.breakpoints.only("sm"))
     const md = useMediaQuery(theme.breakpoints.only("md"))
-    const rate = xs ? 290 : sm ? 190 : md ? 140 : 90
-    return <circle cx={600 + 80 * distance} cy={500 - rate * distance} r="50" fill={fill} />
+    const rate = xs ? 250 : sm ? 150 : md ? 140 : 150
+    return <circle cx={270 + 40 * distance} cy={120 + radius - 1.8 * rate * distance} r={radius} fill={fill} />
 }
 
-interface Props {
-    margin?: string
-    color?: string
+const Ridge = ({ fill }: { fill: string }) => {
+    return (
+        <path
+            d="M93.8172109,98.5978889 C93.2857282,98.5978889 92.7462382,98.4418889 92.2728082,98.1188889 C91.0116627,97.2688889 90.6833645,95.5558889 91.5351382,94.2948889 C107.587718,70.6348889 159.454827,56.4958889 200.327951,56.4958889 L202.20966,56.4958889 L203.908203,55.6828889 C243.828461,36.5228889 296.166998,25.9708889 351.276052,25.9708889 C389.592854,25.9708889 426.467345,31.1318889 449.91264,39.7768889 L453.686067,41.1678889 L457.110177,39.0628889 C489.901961,18.9148889 547.812559,8.26288893 624.582286,8.26288893 C654.694636,8.26288893 687.358304,9.97788893 719.043082,13.2228889 C783.239389,19.7988889 869.79,39.8268889 927.063019,53.0788889 C947.789845,57.8738889 964.00257,61.6258889 974.024673,63.5508889 C975.51903,63.8378889 976.500922,65.2818889 976.21266,66.7768889 C975.922396,68.2718889 974.459067,69.2368889 972.983727,68.9608889 C962.862535,67.0168889 946.603767,63.2558889 926.016068,58.4918889 C868.678991,45.2248889 782.331565,25.2428889 718.477568,18.7038889 C686.978959,15.4788889 654.510469,13.7728889 624.581285,13.7728889 C548.831485,13.7728889 491.920795,24.1398889 459.999802,43.7558889 L455.429651,46.5608889 C454.709997,47.0048889 453.8322,47.0948889 453.031473,46.7988889 L448.004907,44.9438889 C425.136136,36.5138889 388.977295,31.4808889 351.275051,31.4808889 C296.975733,31.4808889 245.486967,41.8378889 206.292368,60.6478889 L204.029313,61.7338889 C203.658976,61.9138889 203.250605,62.0058889 202.83723,62.0058889 L200.325949,62.0058889 C160.892133,62.0058889 111.122929,75.2408889 96.0972818,97.3878889 C95.5678009,98.1728889 94.7010136,98.5978889 93.8172109,98.5978889 Z"
+            id="Path"
+            fill={fill}
+        />
+    )
 }
+
+const Uluru = ({ fill }: { fill: string }) => {
+    return (
+        <path
+            d="M0,217.552889 C0,217.552889 65.1451691,118.482889 84.68892,89.6618889 C104.236675,60.8448889 162.868928,48.2328889 200.327951,48.2328889 C286.651355,6.80288893 403.917865,14.0088889 452.777242,32.0228889 C511.409495,-4.00211107 631.930961,-4.00211107 719.884846,5.00188893 C807.830725,14.0098889 938.131072,48.2328889 975.588093,55.4378889 C1013.04912,62.6448889 1009.79116,95.0678889 1035.85083,127.491889 C1061.90849,159.916889 1101,221.158889 1101,221.158889 L921.025535,220.256889 L924.281493,235.567889 C924.281493,235.567889 798.062853,269.791889 695.449653,229.264889 C672.645941,228.365889 422.646875,229.264889 344.46987,229.264889 C266.290863,229.264889 184.045162,229.264889 162.868928,229.264889 C141.695697,229.264889 127.850122,224.760889 118.890985,220.256889 C65.1451691,220.255889 0,217.552889 0,217.552889 Z"
+            id="Path"
+            fill={fill}
+        />
+    )
+}
+
+const Shadows = ({ fill }: { fill: string }) => {
+    // const theme = useTheme()
+    // // const color = theme.palette.text.primary
+    // const color = theme.palette.primary.main
+    return (
+        <g id="Group" transform="translate(-0.000000, 50.923814)" fill={fill}>
+            <path
+                d="M318.969709,178.339075 L395.771465,43.2390751 C395.771465,43.2390751 337.142215,29.7320751 311.895284,76.5660751 C294.922868,108.056075 272.806781,152.544075 260.131268,178.339075 C278.803227,178.339075 298.782374,178.339075 318.969709,178.339075 Z"
+                id="Path"
+            />
+            <path
+                d="M28.7481109,167.657075 C35.4291791,151.142075 43.1612018,132.341075 49.4048727,117.997075 C57.9826636,98.2910751 78.5843755,57.7610751 93.4338627,28.9810751 C90.0257673,32.0000751 87.0600736,35.2480751 84.6899209,38.7380751 C65.1451691,67.5580751 5.68950947e-14,166.629075 5.68950947e-14,166.629075 C5.68950947e-14,166.629075 11.4814282,167.107075 28.7481109,167.657075 Z"
+                id="Path"
+            />
+            <path
+                d="M667.761505,54.0490751 C643.304291,87.2500751 607.092401,144.769075 586.565757,177.950075 C641.925038,177.908075 686.437467,177.981075 695.449653,178.339075 C701.650285,180.787075 707.938996,182.948075 714.27375,184.879075 L776.069877,1.81107507 C776.069877,1.81107507 703.598054,5.41507507 667.761505,54.0490751 Z"
+                id="Path"
+            />
+            <path
+                d="M132.591428,174.542075 L195.445516,48.6480751 C195.445516,48.6480751 165.314149,48.6480751 145.765394,87.3720751 C133.392155,111.901075 115.139577,146.893075 103.413927,169.268075 C108.629665,169.310075 113.816375,169.332075 118.891985,169.332075 C122.56332,171.175075 127.114454,173.006075 132.591428,174.542075 Z"
+                id="Path"
+            />
+            <path
+                d="M921.025535,169.332075 L952.093754,169.489075 C942.848356,145.628075 928.088951,107.042075 921.622077,87.3720751 C911.850202,57.6540751 886.009732,33.3340751 859.136324,30.6320751 L922.903241,178.171075 L921.025535,169.332075 Z"
+                id="Path"
+            />
+            <path
+                d="M583.885323,16.2250751 C575.491699,29.7890751 523.604572,135.040075 502.467374,178.067075 C514.437245,178.046075 526.438145,178.025075 538.286907,178.004075 L627.861265,0.00807506698 C627.861265,0.00807506698 594.472939,-0.888924933 583.885323,16.2250751 Z"
+                id="Path"
+            />
+            <path
+                d="M434.859968,62.1560751 C418.733321,87.5410751 380.889949,149.989075 363.767397,178.323075 C372.773577,178.315075 382.917791,178.299075 393.928792,178.276075 L486.98331,27.9320751 C486.98331,27.9320751 456.0342,28.8330751 434.859968,62.1560751 Z"
+                id="Path"
+            />
+        </g>
+    )
+}
+
 interface State {
     cw: number
     ch: number
     dx: number
     dy: number
 }
-class Background extends React.Component<Props, State> {
-    state: State = {
-        cw: 0,
-        ch: 0,
-        dx: 0,
-        dy: 0,
+const Background = () => {
+    const theme = useTheme()
+    const [getState, setState] = useState<State>({ cw: 0, ch: 0, dx: 0, dy: 0 }) //topics[0])
+    const ref = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        if (ref != null && ref.current != null) {
+            const { dx, dy } = getState()
+            const cw = ref.current.clientWidth
+            const ch = ref.current.clientHeight
+            setState({ cw: cw, ch: ch, dx: dx, dy: dy })
+        }
+    }, [])
+    const onMouseMove = (e: MouseEvent) => {
+        e.preventDefault()
+        if (ref != null && ref.current != null) {
+            const cx = e.clientX
+            const cy = e.clientY
+            const cw = ref.current.clientWidth
+            const ch = ref.current.clientHeight
+            setState({ cw: cw, ch: ch, dx: (cx - cw) / cw, dy: cy / ch })
+        }
     }
-    render() {
-        const color = this.props.color || "#000000"
-        const fillA = LightenDarkenColor(color, -10) // "#BF5D1B"
-        const fillB = color // "#D86D25"
-        const fillC = LightenDarkenColor(color, -25) // "#9B4B15"
-        const fillD = LightenDarkenColor(color, -35) // "#9B4B15"
-        const fillE = LightenDarkenColor(color, -20) // "#9B4B15"
-        const { dx, dy } = this.state
-        const distance = dx * dx + dy * dy
-        const corners = [
-            [0, 750],
-            [0, 650],
-            [2200, 650],
-            [2200, 750],
-            [0, 750],
-        ]
-        const points = corners.map((corner) => corner[0] + "," + corner[1]).join(" ")
-        // console.log(this.state.cw, this.state.ch)
-        return (
-            <div
-                onMouseMove={() => console.log("MOVED")}
-                // style={{
-                //     position: "absolute",
-                //     margin: this.props.margin || "-24px",
-                // }}
-                style={{
-                    position: "fixed",
-                    margin: this.props.margin || "-24px",
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                }}
-            >
+    const xs = useMediaQuery(theme.breakpoints.only("xs"))
+    const { cw, ch, dx, dy } = getState()
+    const distance = dx * dx + dy * dy
+    const radius = 160 - dy * 40
+    const points = [
+        [0, 200],
+        [0, xs ? ch + 212 : ch],
+        [1500, xs ? ch + 212 : ch],
+        [1500, 180],
+        [0, 180],
+    ]
+        .map((corner) => corner[0] + "," + corner[1])
+        .join(" ")
+    return (
+        <div
+            style={{
+                position: "absolute",
+                top: 50,
+                bottom: 46,
+                left: 0,
+                right: 0,
+            }}
+            onMouseMove={onMouseMove}
+            ref={ref}
+        >
+            {cw + ch > 0 && (
                 <svg
+                    width="100%" // 1101px"
+                    height="100%" //"250px"
+                    // viewBox="0 0 1101 200"
+                    viewBox="0 0 1201 100"
                     version="1.1"
-                    id="Capa_1"
-                    // xmlns="http://www.w3.org/2000/svg"
-                    // xmlns:xlink="http://www.w3.org/1999/xlink"
-                    x="0px"
-                    y="0px"
-                    width="100%"
-                    // width={`${this.state.cw}px`}
-                    // width="1200px"
-                    height="1200px"
-                    // height="500px"
-                    // height={`${this.state.ch}px`}
-                    // viewBox="0 0 1200 1200"
-                    viewBox="0 150 2200 1200"
-                    // enableBackground="new 0 0 1200 1200"
-                    xmlSpace="preserve"
                 >
-                    <RisingSun distance={distance} fill={fillD} />
-                    <polyline points={points} fill={fillE} stroke={"#00000000"} strokeWidth={1} />
-                    <g>
-                        <path
-                            // fill="#BF5D1B"
-                            fill={fillA}
-                            d="M50,693.019c0,0,65.086-99.07,84.612-127.891c19.53-28.817,78.109-41.429,115.534-41.429
-		c86.245-41.43,203.405-34.224,252.22-16.21c58.579-36.025,178.991-36.025,266.865-27.021
-		c87.866,9.008,218.048,43.231,255.471,50.436c37.427,7.207,34.172,39.63,60.208,72.054c26.034,32.425,65.09,93.667,65.09,93.667
-		l-179.811-0.902l3.253,15.311c0,0-126.104,34.224-228.624-6.303c-22.783-0.899-272.555,0-350.661,0c-78.108,0-160.279,0-181.436,0
-		c-21.154,0-34.987-4.504-43.938-9.008C115.086,695.722,50,693.019,50,693.019z"
-                        />
-                        <g>
-                            <path
-                                // fill="#D86D25"
-                                fill={fillB}
-                                d="M143.732,574.064c-0.531,0-1.07-0.156-1.543-0.479c-1.26-0.85-1.588-2.563-0.737-3.824
-			c16.038-23.66,67.858-37.799,108.694-37.799h1.88l1.697-0.813c39.884-19.16,92.175-29.712,147.234-29.712
-			c38.282,0,75.123,5.161,98.547,13.806l3.77,1.391l3.421-2.105c32.762-20.148,90.62-30.8,167.32-30.8
-			c30.085,0,62.719,1.715,94.375,4.96c64.138,6.576,150.61,26.604,207.831,39.856c20.708,4.795,36.906,8.547,46.919,10.472
-			c1.493,0.287,2.474,1.731,2.186,3.226c-0.29,1.495-1.752,2.46-3.226,2.184c-10.112-1.944-26.356-5.705-46.925-10.469
-			c-57.285-13.267-143.554-33.249-207.35-39.788c-31.47-3.225-63.909-4.931-93.811-4.931c-75.681,0-132.54,10.367-164.432,29.983
-			l-4.566,2.805c-0.719,0.444-1.596,0.534-2.396,0.238l-5.022-1.855c-22.848-8.43-58.974-13.463-96.642-13.463
-			c-54.25,0-105.692,10.357-144.851,29.167l-2.261,1.086c-0.37,0.18-0.778,0.272-1.191,0.272h-2.509
-			c-39.398,0-89.122,13.235-104.134,35.382C145.481,573.639,144.615,574.064,143.732,574.064z"
-                            />
-                        </g>
-                        <g>
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M368.68,704.729l76.732-135.1c0,0-58.576-13.507-83.8,33.327c-16.957,31.49-39.053,75.978-51.717,101.772
-			C328.55,704.729,348.511,704.729,368.68,704.729z"
-                            />
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M78.722,694.047c6.675-16.515,14.4-35.316,20.638-49.66c8.57-19.706,29.153-60.236,43.989-89.016
-			c-3.405,3.019-6.368,6.267-8.736,9.757C115.086,593.948,50,693.019,50,693.019S61.471,693.497,78.722,694.047z"
-                            />
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M717.155,580.439c-24.435,33.201-60.614,90.72-81.122,123.901c55.309-0.042,99.781,0.031,108.785,0.389
-			c6.195,2.448,12.478,4.609,18.807,6.54l61.74-183.068C825.365,528.201,752.959,531.805,717.155,580.439z"
-                            />
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M182.471,700.932l62.797-125.894c0,0-30.104,0-49.635,38.724c-12.362,24.529-30.598,59.521-42.313,81.896
-			c5.211,0.042,10.393,0.064,15.464,0.064C172.452,697.565,176.999,699.396,182.471,700.932z"
-                            />
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M970.189,695.722l31.04,0.157c-9.237-23.861-23.983-62.447-30.444-82.117
-			c-9.763-29.718-35.58-54.038-62.429-56.74l63.709,147.539L970.189,695.722z"
-                            />
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M633.355,542.615c-8.386,13.564-60.226,118.815-81.344,161.842c11.959-0.021,23.949-0.042,35.787-0.063
-			l89.493-177.996C677.292,526.398,643.933,525.501,633.355,542.615z"
-                            />
-                            <path
-                                // fill="#9B4B15"
-                                fill={fillC}
-                                d="M484.465,588.546c-16.112,25.385-53.921,87.833-71.028,116.167c8.998-0.008,19.133-0.024,30.134-0.047
-			l92.97-150.344C536.54,554.322,505.62,555.223,484.465,588.546z"
-                            />
+                    <defs>
+                        <linearGradient
+                            id="linear-gradient"
+                            gradientUnits="userSpaceOnUse"
+                            x1="0"
+                            y1="400"
+                            x2="0"
+                            y2="0"
+                        >
+                            <stop offset="0%" stopColor={theme.palette.secondary.main} stopOpacity="0%" />
+                            <stop offset="100%" stopColor={theme.palette.secondary.main} stopOpacity="100%" />
+                        </linearGradient>
+                    </defs>
+                    <RisingMoon distance={distance} radius={radius} fill={"#F4F6F0"} />
+                    <polyline points={points} fill={theme.palette.primary.main} stroke={"#00000000"} strokeWidth={1} />
+                    <polyline points={points} fill="url(#linear-gradient)" stroke={"#00000000"} strokeWidth={1} />
+                    <g id="MovingMountains" transform="scale(0.5, 0.5) translate(100, 200)">
+                        <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                            <g id="uluru-ayers-rock-by-Vexels" fillRule="nonzero">
+                                <Uluru fill={LightenDarkenColor(theme.palette.secondary.main, -50)} />
+                                <Ridge fill={theme.palette.background.default} />
+                                <Shadows fill={theme.palette.primary.main} />
+                            </g>
                         </g>
                     </g>
                 </svg>
-            </div>
-        )
-    }
-    setCwCh = ({ cw, ch }: { cw: number; ch: number; dx: number; dy: number }) => {
-        this.setState({
-            cw: cw,
-            ch: ch,
-            dx: this.state.dx,
-            dy: this.state.dy,
-        })
-    }
-    setCwChDxDy = ({ cw, ch, dx, dy }: { cw: number; ch: number; dx: number; dy: number }) => {
-        this.setState({
-            cw: cw,
-            ch: ch,
-            dx: dx,
-            dy: dy,
-        })
-    }
+            )}
+        </div>
+    )
 }
 export default Background

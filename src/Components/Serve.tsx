@@ -34,8 +34,9 @@ export const Serve = (props: Props): JSX.Element => {
                             bullets: [],
                         }
                     })}
-                    xs={2}
-                    md={3}
+                    xs={3}
+                    sm={4}
+                    md={4}
                 />
             </Collapse>
         </>

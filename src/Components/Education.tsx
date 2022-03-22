@@ -3,10 +3,17 @@ import { Box, Grid } from "@mui/material"
 
 import Avatar from "@mui/material/Avatar"
 import Typography from "@mui/material/Typography"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { useTheme } from "@mui/material/styles"
 
 import education from "../CV/Education"
 
 export const Education = (): JSX.Element => {
+    const theme = useTheme()
+    const xs = useMediaQuery(theme.breakpoints.only("xs"))
+    // const sm = useMediaQuery(theme.breakpoints.only("sm"))
+    const avatarSize = xs ? 70 : 104
+    const degreeVariant = xs ? "h5" : "h4"
     return (
         <Grid container spacing={0}>
             {education.map((item, index) => (
@@ -38,11 +45,11 @@ export const Education = (): JSX.Element => {
                                 border: 4,
                                 borderColor: "secondary.light", //(theme) => theme.palette.secondary.light,
                                 margin: "auto",
-                                height: "104px",
-                                width: "104px",
+                                height: "104px", //`${avatarSize}px`,
+                                width: `${avatarSize}px`,
                             }}
                         >
-                            <Typography variant="h4" component="span">
+                            <Typography variant={degreeVariant} component="span">
                                 {item.degree}
                             </Typography>
                         </Avatar>

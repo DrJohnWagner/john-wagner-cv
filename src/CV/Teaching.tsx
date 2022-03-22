@@ -9,7 +9,7 @@ const teaching = [
     {
         dates: "2017",
         from: "2017",
-        to: "",
+        to: "2017",
         title: "Building Your Eminence and Career in Research and IBM Research",
         organisation: "IBM Research-Australia",
     },
@@ -60,21 +60,21 @@ const teaching = [
     {
         dates: "1997",
         from: "1997",
-        to: "",
+        to: "1997",
         title: "Numerical Analysis Computer Laboratory",
         organisation: "Department of Mathematics, University of California, Davis",
     },
     {
         dates: "1995",
         from: "1995",
-        to: "",
+        to: "1995",
         title: "Ordinary Differential Equations",
         organisation: "Department of Mathematics, University of California, Davis",
     },
     {
         dates: "1995",
         from: "1995",
-        to: "",
+        to: "1995",
         title: "Ordinary Differential Equations Computer Lab",
         organisation: "Department of Mathematics, University of California, Davis",
     },

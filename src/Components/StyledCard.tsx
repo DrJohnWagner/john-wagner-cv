@@ -35,6 +35,7 @@ const StyledCard = (props: Props): JSX.Element => {
                     //     border: "5px",
                     //     borderColor: theme.palette.primary.main,
                     // }}
+                    style={{ border: "1px solid" }}
                     sx={{
                         // border: "5px",
                         // borderColor: theme.palette.primary.main,

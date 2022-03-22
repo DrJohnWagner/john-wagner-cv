@@ -1,5 +1,13 @@
 const courses = [
     {
+        name: "Scrum Methodologies. LearnQuest via Coursera",
+        grade: "93.30%",
+    },
+    {
+        name: "Introduction to Scrum Master Training. LearnQuest via Coursera",
+        grade: "92.29%",
+    },
+    {
         name: "Machine Learning Foundations: A Case Study Approach. University of Washington via Coursera",
         grade: "99.28%",
     },

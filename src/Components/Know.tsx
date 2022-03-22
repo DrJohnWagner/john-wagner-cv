@@ -19,10 +19,15 @@ const Know = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.know} keyword="know" />
+                <IAmJohn words={data.know.filter(() => Math.random() < 0.5)} keyword="know" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <Grid container spacing={2}>
+                    <Grid item key="additional-skills" xs={12} style={{ textAlign: "center" }}>
+                        <Typography variant="h6" component="span">
+                            {"<label>deep expertise</label>"}
+                        </Typography>
+                    </Grid>
                     {expertise.map((s) => (
                         <Grid item key={s} xs={4}>
                             <Typography variant="body1" component="span">
@@ -45,6 +50,7 @@ const Know = (props: Props): JSX.Element => {
                 <GridOfChips
                     strings={skills.sort((a, b) => a.localeCompare(b))}
                     label="<label>additional skills</label>"
+                    showAvatars
                     columns={24}
                     spacing={2}
                     xs={8}
