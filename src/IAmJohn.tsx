@@ -103,6 +103,7 @@ export const IAmJohn = (props: Props): JSX.Element => {
                 }}
             >
                 <Grid container columns={14} spacing={2} justifyContent="center">
+                    <Grid item xs={14} />
                     {cells.map((cell, index) => createCell(cell, index + cell))}
                 </Grid>
             </div>

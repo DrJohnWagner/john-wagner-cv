@@ -5,7 +5,7 @@ import Timetable from "./Timetable"
 
 // import Am from "./Am"
 import IAmJohn from "../IAmJohn"
-import data from "../Data"
+import keywords from "../CV/Keywords"
 import service from "../CV/Service"
 import teaching from "../CV/Teaching"
 
@@ -20,7 +20,7 @@ export const Serve = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.serve} keyword="serve" />
+                <IAmJohn words={keywords.serve} keyword="serve" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <Timetable

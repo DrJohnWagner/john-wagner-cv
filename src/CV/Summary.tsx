@@ -1,0 +1,17 @@
+const summary = {
+    text: [
+        "Accomplished professional and inventor with hands-on experience defining and driving innovation using mathematical and computational models to solve problems in healthcare and the life sciences. Thrives in collaborative environments with the ability to navigate complex projects, mentor colleagues and advance leading-edge technology and knowledge.",
+    ],
+    bullets: [
+        "Recognized for Subject Matter Expertise across Research, Healthcare & Life Sciences, Computational Mathematics, Data Science, Artificial Intelligence (AI), Project Management, Team Leadership and Communication.",
+        "PhD and MS in Applied Mathematics as well as BS in Mathematics from the University of California, Davis.",
+    ],
+    // "I am an applied mathematician, data scientist, software engineer, technologist and inventor with over 30 years of industrial and academic experience in research, software development, technology, innovation and teaching.",
+    // "I received my PhD in Applied Mathematics from the University of California, Davis in 1998, where I worked with Dr. Joel Keizer at the Institute of Theoretical Dynamics on mathematical and computational models of cellular calcium signalling. I then did an NIH NRSA Postdoctoral Fellowship with Dr. Leslie Loew at the National Resource for Cell Analysis and Modeling at the University of Connecticut Health Center.",
+    // "I joined IBM Research in 2004 in Yorktown Heights, NY, where I worked on p53 signalling in cancer, cellular pathway analysis and ultra-scalable, large-scale neural tissue simulation. I moved to Melbourne in 2010 to lead the IBM Research Collaboratory for Life Sciences—Melbourne at the Victorian Life Sciences Computation Initiative at the University of Melbourne. My team delivered, maintained and performed collaborative research on the first Blue Gene systems in Australia, including the largest machine devoted entirely to life sciences research in the Southern Hemisphere. Our work covered a range of projects, including molecular dynamics-based simulation and analysis of enzyme dynamics; molecular and fluid dynamics-based studies of proteins in nanopores and nanodevices; molecular dynamics simulations of cellulose microfibril structure, dynamics and adsorption; and TGF-β and IL-6 signalling in colorectal cancer.",
+    // "After my team joined the IBM Research—Australia lab in 2015, I worked as a researcher and software engineer on a wide range of projects, including artificial intelligence in diagnostic ophthalmology; machine learning in patent analysis; cloud-based personal weather forecasting; and blockchain project management and software development in international transport and finance.",
+    // "I have also held an Honorary Fellow appointment in Mathematics, and Honorary and Senior Fellow appointments in Electrical and Electronic Engineering—and taught extensively—at the University of Melbourne.",
+    // "I have co-authored 38 journal papers, conference papers and book chapters as well as 66 patents awarded in the US, China and Japan. My work has been cited 7,689 times and I have an h-index of 26 and an i10-index of 44. I also co-edited the graduate level text, Computational Cell Biology (Springer Interdisciplinary Applied Mathematics, 2002). While at IBM I received four IBM Research Division awards, sixteen IBM Invention Achievement Awards and was named an IBM Master Inventor in 2014 and 2019.",
+}
+
+export default summary

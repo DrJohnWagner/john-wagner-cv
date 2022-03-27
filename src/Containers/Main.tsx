@@ -1,8 +1,17 @@
 import React, { useEffect } from "react"
 // import { Button, ButtonGroup, Paper } from "@mui/material"
-import { AppBar, Box, Button, Grid, Paper, Tab, Tabs, Tooltip, Typography } from "@mui/material"
+import { Grid, Paper, Tab, Tabs } from "@mui/material"
+import AppBar from "@mui/material/AppBar"
+import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
-import NavigateNext from "@mui/icons-material/NavigateNext"
+import Typography from "@mui/material/Typography"
+import Menu from "@mui/material/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
+import Button from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
+import MenuItem from "@mui/material/MenuItem"
+
+// import NavigateNext from "@mui/icons-material/NavigateNext"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import { useTheme } from "@mui/material/styles"
 
@@ -18,8 +27,114 @@ import Serve from "../Components/Serve"
 // import Research from "../Components/Research"
 // import Invent from "../Components/Invent"
 import Create from "../Components/Create"
-
 import data from "../Data"
+
+const ThemeButton = ({
+    open,
+    onClose,
+    onClick,
+}: {
+    open: boolean
+    onClose: () => void
+    onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined
+}) => {
+    return (
+        <>
+            <Tooltip
+                arrow
+                onClose={onClose}
+                open={open}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title={
+                    <Box sx={{ textAlign: "center" }}>
+                        <Typography variant="h3" color="inherit">
+                            ⇑
+                        </Typography>
+                        <Typography variant="h6" color="inherit">
+                            Click here to
+                        </Typography>
+                        <Typography variant="h6" color="inherit">
+                            change themes!
+                        </Typography>
+                    </Box>
+                }
+            >
+                <IconButton
+                    onClick={onClick}
+                    style={{ marginRight: "64px" }}
+                    aria-label="fingerprint"
+                    color="secondary"
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: (theme) => theme.palette.background.default,
+                            border: "2px solid",
+                            borderColor: (theme) => theme.palette.primary.main,
+                            width: "24px",
+                            height: "24px",
+                            // margin: "auto 0px auto auto",
+                        }}
+                    ></Box>
+                </IconButton>
+            </Tooltip>
+        </>
+    )
+}
+
+const DropdownMenu = ({
+    tabs,
+    anchorEl,
+    onClose,
+    // onClick,
+    onChange,
+}: {
+    tabs: string[]
+    anchorEl?: Element | ((element: Element) => Element) | null | undefined
+    onClose: () => void
+    onChange: (event: React.SyntheticEvent<Element, Event>, value: any) => void
+}) => {
+    return (
+        <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+            }}
+            keepMounted
+            transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+            }}
+            open={Boolean(anchorEl)}
+            onClose={onClose}
+            sx={{
+                "& .MuiMenu-paper": {
+                    border: "1px solid",
+                    backgroundColor: (theme) => theme.palette.secondary.main,
+                },
+                display: { xs: "block", md: "none" },
+            }}
+        >
+            {tabs.map((tab, index) => (
+                <MenuItem
+                    sx={{ margin: "8px 16px" }}
+                    key={tab}
+                    onClick={(event) => {
+                        onClose()
+                        onChange(event, index)
+                    }}
+                >
+                    <Typography variant="h6" textAlign="center">
+                        {tab}
+                    </Typography>
+                </MenuItem>
+            ))}
+        </Menu>
+    )
+}
 interface Props {
     themeIndex: number
     onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined
@@ -31,6 +146,14 @@ export const Main = (props: Props): JSX.Element => {
     const [getSayMore, setSayMore] = useState(true)
     const [getOpenSayMore, setOpenSayMore] = useState(false)
     const [getOpenTheme, setOpenTheme] = useState(false)
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget)
+    }
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null)
+    }
 
     const onTab = (event: any, tab: number) => {
         setTab(tab)
@@ -64,51 +187,33 @@ export const Main = (props: Props): JSX.Element => {
     const sayMore = getSayMore() ? "<button>say more things</button>" : "<button>say less things</button>"
     return (
         <div>
-            <AppBar position="sticky">
+            <AppBar position="static">
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                    <Tabs value={getTab()} onChange={onTab}>
+                    <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                        <IconButton
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleOpenNavMenu}
+                            color="inherit"
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <DropdownMenu
+                            tabs={tabs}
+                            anchorEl={anchorElNav}
+                            onClose={handleCloseNavMenu}
+                            onChange={onTab}
+                        />
+                    </Box>
+                    <Tabs sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} value={getTab()} onChange={onTab}>
                         {tabs.map((tab) => (
                             <Tab key={tab} label={tab} />
                         ))}
                     </Tabs>
-                    {/* <Typography sx={{ margin: "auto 8px auto auto" }}>Theme {props.themeIndex}:</Typography> */}
-                    <Box
-                        sx={{
-                            backgroundColor: (theme) => theme.palette.background.default,
-                            border: "2px solid",
-                            borderColor: (theme) => theme.palette.primary.main,
-                            width: "24px",
-                            height: "24px",
-                            margin: "auto 8px auto auto",
-                        }}
-                    ></Box>
-                    <Tooltip
-                        arrow
-                        onClose={() => setOpenTheme(false)}
-                        open={getOpenTheme()}
-                        disableFocusListener
-                        disableHoverListener
-                        disableTouchListener
-                        title={
-                            <Box sx={{ textAlign: "center" }}>
-                                <Typography variant="h6" color="inherit">
-                                    Click here to
-                                </Typography>
-                                <Typography variant="h6" color="inherit">
-                                    change themes!
-                                </Typography>
-                            </Box>
-                        }
-                    >
-                        <IconButton
-                            color="primary"
-                            aria-label="mailto"
-                            onClick={onClick}
-                            style={{ marginRight: "24px" }}
-                        >
-                            <NavigateNext />
-                        </IconButton>
-                    </Tooltip>
+                    <div style={{ margin: "auto" }} />
+                    <ThemeButton open={getOpenTheme()} onClose={() => setOpenTheme(false)} onClick={onClick} />
                 </div>
             </AppBar>
             <Box style={{ textAlign: "left" }}>
@@ -183,7 +288,10 @@ export const Main = (props: Props): JSX.Element => {
                                         click here to learn more
                                     </Typography>
                                     <Typography variant="h6" color="inherit">
-                                        (or less) about me!
+                                        (or less)about me!
+                                    </Typography>
+                                    <Typography variant="h3" color="inherit">
+                                        ⇓
                                     </Typography>
                                 </Box>
                             }

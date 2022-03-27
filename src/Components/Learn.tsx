@@ -8,7 +8,7 @@ import IAmJohn from "../IAmJohn"
 import Education from "./Education"
 import CaptionedImage from "./CaptionedImage"
 import useState from "../Functions/useState"
-import data from "../Data"
+import keywords from "../CV/Keywords"
 import courses from "../CV/Courses"
 
 interface Props {
@@ -25,7 +25,7 @@ export const Learn = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.learn} keyword="learn" />
+                <IAmJohn words={keywords.learn} keyword="learn" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <Grid container spacing={0}>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Avatar, Badge, Box, Grid, Collapse, Tooltip } from "@mui/material"
+import { Avatar, Badge, Grid, Collapse } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
@@ -7,12 +7,13 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline"
 import LinkedInIcon from "@mui/icons-material/LinkedIn"
 
 import GridOfChips from "./GridOfChips"
-import useRainbow from "../Functions/useRainbow"
+// import useRainbow from "../Functions/useRainbow"
 
 // import Am from "./Am"
 import IAmJohn from "../IAmJohn"
-import data from "../Data"
-import cv from "../CV"
+import keywords from "../CV/Keywords"
+import summary from "../CV/Summary"
+import values from "../CV/Values"
 
 const IMAGES = process.env.PUBLIC_URL + "/assets/images"
 
@@ -22,17 +23,17 @@ interface Props {
 
 export const Am = (props: Props): JSX.Element => {
     const { sayMore } = props
-    const { summary, coreValues } = cv
     const label = "<label>core values</label>"
     //
-    const intervalDelay = 1300
-    const transitionDelay = intervalDelay * 1.25
-    const colors = useRainbow({ intervalDelay })
-    const colorKeys = Object.keys(colors)
+    // const intervalDelay = 1300 * 100
+    // // const transitionDelay = intervalDelay * 1.25
+    // const colors = useRainbow({ intervalDelay })
+    // const colorKeys = Object.keys(colors)
+    // console.log(colorKeys)
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.am} keyword="am" />
+                <IAmJohn words={keywords.am} keyword="am" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <Grid container spacing={1}>
@@ -42,53 +43,41 @@ export const Am = (props: Props): JSX.Element => {
                         style={{ alignItems: "center", display: "flex", flexDirection: "column", textAlign: "center" }}
                         xs={12}
                     >
-                        <Tooltip
-                            placement="right"
-                            title={
-                                <Box sx={{ textAlign: "center" }}>
-                                    <Typography variant="body2" color="inherit">
-                                        Rainbow animation comes from the brilliant Joshua Comeau
-                                        (https://github.com/joshwcomeau).
-                                    </Typography>
-                                </Box>
+                        <Badge
+                            sx={{
+                                "& .MuiBadge-badge": {
+                                    border: "1px solid",
+                                    borderColor: (theme) => theme.palette.primary.main,
+                                    backgroundColor: (theme) => theme.palette.background.default, //"green",
+                                },
+                            }}
+                            // color="secondary"
+                            badgeContent={
+                                <Typography
+                                    sx={{
+                                        fontSize: "0.9rem",
+                                        borderColor: (theme) => theme.palette.primary.main,
+                                        background:
+                                            "-webkit-linear-gradient(left, red, orange, green, blue, indigo, violet)",
+                                        WebkitBackgroundClip: "text",
+                                        WebkitTextFillColor: "transparent",
+                                    }}
+                                >
+                                    They/Them
+                                </Typography>
                             }
                         >
-                            <Badge
+                            <Avatar
+                                alt="John Wagner, PhD"
+                                src={`${IMAGES}/John.png`}
                                 sx={{
-                                    "& .MuiBadge-badge": {
-                                        // color: "lightgreen",
-                                        // backgroundColor: "green",
-                                        ...colors,
-                                        transition: `
-                                    ${colorKeys[0]} ${transitionDelay}ms linear,
-                                    ${colorKeys[1]} ${transitionDelay}ms linear,
-                                    ${colorKeys[2]} ${transitionDelay}ms linear
-                                    `,
-                                        background: `
-                                    radial-gradient(
-                                        circle at top left,
-                                        var(${colorKeys[2]}),
-                                        var(${colorKeys[1]}),
-                                        var(${colorKeys[0]})
-                                    )
-                                    `,
-                                    },
+                                    border: "4px solid",
+                                    borderColor: (theme) => theme.palette.primary.main,
+                                    width: 96,
+                                    height: 96,
                                 }}
-                                // color="secondary"
-                                badgeContent={"They/Them"}
-                            >
-                                <Avatar
-                                    alt="John Wagner, PhD"
-                                    src={`${IMAGES}/John.png`}
-                                    sx={{
-                                        border: "4px solid",
-                                        borderColor: (theme) => theme.palette.primary.main,
-                                        width: 96,
-                                        height: 96,
-                                    }}
-                                />
-                            </Badge>
-                        </Tooltip>
+                            />
+                        </Badge>
                         <Typography variant="h4" component="span" display="block">
                             John Wagner, PhD
                         </Typography>
@@ -164,7 +153,7 @@ export const Am = (props: Props): JSX.Element => {
                         </div>
                     ))}
                 </Grid>
-                <GridOfChips strings={coreValues} label={label} columns={12} spacing={2} xs={6} sm={4} md={2} />
+                <GridOfChips strings={values} label={label} columns={12} spacing={2} xs={6} sm={4} md={2} />
             </Collapse>
         </>
     )

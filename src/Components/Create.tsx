@@ -13,7 +13,7 @@ import useState from "../Functions/useState"
 import IAmJohn from "../IAmJohn"
 import patents from "../CV/Patents"
 import publications from "../CV/Publications"
-import data from "../Data"
+import keywords from "../CV/Keywords"
 
 import Patent from "../Types/Patent"
 import Publication from "../Types/Publication"
@@ -104,7 +104,7 @@ const Invent = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.create.filter(() => Math.random() < 0.4)} keyword="create" />
+                <IAmJohn words={keywords.create.filter(() => Math.random() < 0.4)} keyword="create" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <GridOfToggleButtons

@@ -2,6 +2,16 @@ import Publication from "../Types/Publication"
 
 const publications: Publication[] = [
     {
+        key: "UnderReview2",
+        topics: ["Cellulose", "HPC"],
+        authors:
+            "M.-R. Kao, J. Parker, D. Oehme, S.-C. Chang, D. Wang, V. Srivastava, J.M. Wagner, G.B. Fincher, Y.S.Y. Hsieh, Ph.D.",
+        title: "Molecular evolution of substrate specificities of barley (1,3;1,4)-β-glucanases",
+        journal: "Journal of Biological Chemistry",
+        volume: "(under review)",
+        year: 2022,
+    },
+    {
         key: "UnderReview",
         topics: ["Machine Learning", "Genomics"],
         authors: "J. Dhaliwal and J. Wagner",

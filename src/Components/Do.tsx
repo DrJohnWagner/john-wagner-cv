@@ -11,7 +11,7 @@ import useState from "../Functions/useState"
 import IAmJohn from "../IAmJohn"
 import images from "../Images"
 import professionalExperience from "../CV/ProfessionalExperience"
-import data from "../Data"
+import keywords from "../CV/Keywords"
 
 // const IMAGES = process.env.PUBLIC_URL + "/assets/images"
 
@@ -30,7 +30,7 @@ export const Do = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.do} keyword="do" />
+                <IAmJohn words={keywords.do} keyword="do" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <GridOfToggleButtons values={labels} value={getLabel()} spacing={2} onChange={onLabel} />

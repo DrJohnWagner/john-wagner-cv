@@ -1,27 +1,6 @@
 import { createTheme } from "@mui/material/styles"
 
 const PALETTES = [
-    {
-        // See #15 at https://visme.co/blog/website-color-schemes/
-        common: "#F2EED4",
-        quaternary: "#5E6C84", //"#AC3B61",
-        tertiary: "#EEE2DC",
-        background: "#EDC7B7", //"#F2EED4",
-        primary: "#123D6A", //"#5A563C",
-        secondary: "#BAB1B5", //"#D9D5BB",
-        text: "#123D6A", //"#5A563C",
-        disabled: "#BFBBA1",
-    },
-    {
-        common: "#F2EED4",
-        quaternary: "#503915", //"#D9D5BB",
-        tertiary: "#CCBCA4", //"#C2B093", //"#ebd5b3", //"#F2EED4",
-        background: "#ebd5b3", //"#F2EED4",
-        primary: "#503915", //"#5A563C",
-        secondary: "#dfbc85", //"#D9D5BB",
-        text: "#503915", //"#5A563C",
-        disabled: "#BFBBA1",
-    },
     // Maroon
     {
         common: "#F2EED4",
@@ -44,6 +23,27 @@ const PALETTES = [
         primary: "#284966",
         secondary: "#8BBBC3", //"#9ec6c0", //"#ffb81e",
         text: "#284966",
+        disabled: "#BFBBA1",
+    },
+    {
+        // See #15 at https://visme.co/blog/website-color-schemes/
+        common: "#F2EED4",
+        quaternary: "#5E6C84", //"#AC3B61",
+        tertiary: "#EEE2DC",
+        background: "#EDC7B7", //"#F2EED4",
+        primary: "#123D6A", //"#5A563C",
+        secondary: "#BAB1B5", //"#D9D5BB",
+        text: "#123D6A", //"#5A563C",
+        disabled: "#BFBBA1",
+    },
+    {
+        common: "#F2EED4",
+        quaternary: "#503915", //"#D9D5BB",
+        tertiary: "#CCBCA4", //"#C2B093", //"#ebd5b3", //"#F2EED4",
+        background: "#ebd5b3", //"#F2EED4",
+        primary: "#503915", //"#5A563C",
+        secondary: "#dfbc85", //"#D9D5BB",
+        text: "#503915", //"#5A563C",
         disabled: "#BFBBA1",
     },
     // Plum
@@ -249,12 +249,16 @@ const createIndexedTheme = (index: number) => {
                 styleOverrides: {
                     tooltip: {
                         border: "2px solid",
-                        borderColor: PALETTES[index].primary,
+                        borderColor: PALETTES[index].secondary,
                         color: PALETTES[index].primary,
-                        backgroundColor: PALETTES[index].secondary,
+                        backgroundColor: PALETTES[index].background,
+                        // borderColor: PALETTES[index].primary,
+                        // color: PALETTES[index].primary,
+                        // backgroundColor: PALETTES[index].secondary,
                     },
                     arrow: {
-                        color: PALETTES[index].primary, //"red",
+                        color: PALETTES[index].secondary, //"red",
+                        // color: PALETTES[index].primary, //"red",
                     },
                 },
             },

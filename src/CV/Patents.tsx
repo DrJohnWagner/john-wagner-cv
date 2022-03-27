@@ -2,6 +2,31 @@ import Patent from "../Types/Patent"
 
 const patents: Patent[] = [
     {
+        pto: "DE",
+        publication: "DE102014117526A1",
+        year: 2021,
+        title: "Verwalten von Flugrouten eines segelnden Luftfahrzeugs",
+        inventors: "T.M. Lynar, O.J. Smith and J.M. Wagner",
+        issued: "July 8, 2021",
+    },
+    {
+        pto: "GB",
+        publication: "GB2538207B",
+        year: 2020,
+        title: "System and method for collaborative vehicle crash planning and sequence deployment",
+        inventors: "J.R. Kozloski, C.A. Pickover, T.M. Lynar and J. Wagner",
+        issued: "April 22, 2020",
+    },
+    {
+        pto: "GB",
+        publication: "GB2549164B",
+        year: 2020,
+        title: "Detection of translocation events using graphene-based nanopore assemblies",
+        inventors: "S.K. Kannam, J.M. Wagner, S. Harrer, C. Schieber, J.S. Baldauf, M. Downton and N.J. Gunn",
+        issued: "February 19, 2020",
+    },
+    ////
+    {
         pto: "US",
         publication: "US11195402",
         year: 2021,

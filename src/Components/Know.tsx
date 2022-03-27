@@ -6,7 +6,7 @@ import GridOfChips from "./GridOfChips"
 
 // import Am from "./Am"
 import IAmJohn from "../IAmJohn"
-import data from "../Data"
+import keywords from "../CV/Keywords"
 import cv from "../CV"
 
 interface Props {
@@ -19,7 +19,7 @@ const Know = (props: Props): JSX.Element => {
     return (
         <>
             <Collapse in={sayMore}>
-                <IAmJohn words={data.know.filter(() => Math.random() < 0.5)} keyword="know" />
+                <IAmJohn words={keywords.know.filter(() => Math.random() < 0.5)} keyword="know" />
             </Collapse>
             <Collapse in={!sayMore}>
                 <Grid container spacing={2}>
@@ -39,13 +39,13 @@ const Know = (props: Props): JSX.Element => {
                 <GridOfChips
                     strings={industries}
                     label={"<label>industry knowledge</label>"}
-                    columns={8}
+                    columns={24}
                     spacing={2}
-                    xs={4}
-                    sm={2}
-                    md={2}
-                    lg={1}
-                    xl={1}
+                    xs={12}
+                    sm={8}
+                    md={6}
+                    lg={6}
+                    xl={3}
                 />
                 <GridOfChips
                     strings={skills.sort((a, b) => a.localeCompare(b))}
