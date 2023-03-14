@@ -1,5 +1,13 @@
 const courses = [
     {
+        name: "Scrum Master Certification. LearnQuest via Coursera.",
+        grade: "94.735%",
+    },
+    {
+        name: "Scrum Master Certification: Combining Scrum with Other Agile Methodologies. LearnQuest via Coursera.",
+        grade: "98.35%",
+    },
+    {
         name: "Scrum Master Certification: Scaling Agile and the Team-of-Teams. LearnQuest via Coursera.",
         grade: "95.00%",
     },
